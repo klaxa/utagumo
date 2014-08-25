@@ -8,4 +8,4 @@ POST because we use access tokens
 base_url/api/login
 base_url/api/logout
 base_url/api/get/collection
-base_url/api/get/track/id[/codec/<mp3/vorbis/aac/opus>/[quality/<%d>[k]]]
+base_url/api/get/track/id[/codec/<<mp3/vorbis/aac/opus>/[quality/<%d>[k]]|copy>]

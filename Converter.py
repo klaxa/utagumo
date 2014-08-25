@@ -30,7 +30,7 @@ class Converter:
 			encoded_file = track.encodes[codec + quality]["file"]
 			if os.path.isfile(encoded_file) and self.hash(encoded_file) == track.encodes[codec + quality]["hash"]:
 				logging.info("Encoded file (%s) already exists." % (track.encodes[codec + quality]["file"]))
-				return track.encodes[codec + quality]
+				return track.encodes[codec + quality]["file"]
 		encoded_file = "%s_%s_%s.%s" % (filename, codec, quality ,container)
 		ffmpeg_command = [FFMPEG, "-i", filename, "-c:a", codec, "-%s:a" % (mode), quality, "-y", encoded_file]
 		logging.info("ffmpeg command: %s" % (ffmpeg_command))
