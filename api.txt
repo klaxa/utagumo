@@ -3,7 +3,7 @@ Self-hosted music cloud json/binary API
 utagumo
 =======
 
-POST because we use access tokens
+POST because we use access tokens soon™
 
 base_url/api/login
 base_url/api/logout

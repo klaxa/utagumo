@@ -31,8 +31,10 @@ class Handler(BaseHTTPRequestHandler):
 			if len(args) > 4:
 				quality = args[4]
 		converter = Converter()
-		track = collection.tracks[int(args[0])]
+		track = collection.get_track_by_id(int(args[0]))
 		encoded_file = converter.encode(track, codec=codec, quality=quality)
+		if track.dirty:
+			collection.db_write_track(track)
 		self.send_response(200)
 		self.end_headers()
 		self.send_file(encoded_file)
@@ -47,7 +49,7 @@ class Handler(BaseHTTPRequestHandler):
 	def send_collection(self):
 		self.send_response(200)
 		self.end_headers()
-		files = list(map(Track.to_dict, collection.tracks))
+		files = list(map(Track.to_dict, collection.get_all_tracks()))
 		print(files)
 		self.send(json.dumps(files))
 		self.send('\n')
@@ -86,6 +88,8 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 
 if __name__ == '__main__':
 	server = ThreadedHTTPServer(('localhost', 8080), Handler)
-	collection = Collection("/home/klaxa/Music/test.m3u")
+	#server = HTTPServer(('localhost', 8080), Handler)
+	#collection = Collection("/home/klaxa/Music/test.m3u")
+	collection = Collection(None)
 	print('Starting server, use <Ctrl-C> to stop')
 	server.serve_forever()
