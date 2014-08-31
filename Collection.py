@@ -58,7 +58,7 @@ class Collection:
 		c = self.conn.cursor()
 		# use query plan, vms, etc.
 		track_id = track.track_id
-		if get_track_by_filename(track.filename) == None:
+		if self.get_track_by_filename(track.filename) == None:
 			c.execute('INSERT INTO Tracks (Filename, Title, Artist, Album) VALUES(?, ?, ?, ?)', (track.filename, track.title, track.artist, track.album))
 			track_id = c.lastrowid
 		
